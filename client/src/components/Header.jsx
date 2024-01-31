@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
@@ -14,9 +15,8 @@ const Header = () => {
   };
 
   const closeMobileNav = () => {
-    setMenuIsOpen(false)
-  }
-  
+    setMenuIsOpen(false);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,23 +36,34 @@ const Header = () => {
   }, [menuIsOpen]);
 
   const mobileNav = (
-    <ul className="absolute top-16 bg-slate-200 left-0 w-full flex flex-col">
-      {navlinks.map((link, index) => (
-        <NavLink
-          key={index}
-          to={link.id}
-          className={({ isActive }) => {
-            return `font-semibold py-2 text-black/75 hover:text-black transition-all border-b border-black/10 text-center hover:bg-slate-300  ${
-              isActive ? "text-slate-800 bg-cyan-500" : ""
-            }`;
-          }}
-          onClick={closeMobileNav}
+    <AnimatePresence>
+      {menuIsOpen && (
+        <motion.ul
+          key="mobileNav"
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -50, opacity: 0 }}
+          className="absolute top-16 bg-slate-200 left-0 w-full flex flex-col"
         >
-          {link.name}
-        </NavLink>
-      ))}
-    </ul>
+          {navlinks.map((link, index) => (
+            <NavLink
+              key={index}
+              to={link.id}
+              className={({ isActive }) => {
+                return `font-semibold py-2 text-black/75 hover:text-black transition-all border-b border-black/10 text-center hover:bg-slate-300  ${
+                  isActive ? "text-slate-800 bg-cyan-500" : ""
+                }`;
+              }}
+              onClick={closeMobileNav}
+            >
+              {link.name}
+            </NavLink>
+          ))}
+        </motion.ul>
+      )}
+    </AnimatePresence>
   );
+  
 
   const desktopNav = (
     <div className="hidden lg:inline order-1">
@@ -118,7 +129,7 @@ const Header = () => {
       </div>
       {/* Navlink to be displayed in large and on greater screen sizes */}
       {desktopNav}
-      {menuIsOpen && mobileNav}
+      {mobileNav}
     </nav>
   );
 };
