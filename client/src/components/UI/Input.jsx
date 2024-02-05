@@ -22,9 +22,9 @@ const Input = ({
         value={value}
         onChange={onChangeHandler}
         onBlur={onBlurHandler}
-        className={`outline-none bg-zinc-200 px-2 py-1 border-2 border-zinc-300 rounded-lg placeholder:text-zinc-500 placeholder:font-medium focus:border-cyan-400 transition-all ${
-          hasError ? "border-red-700" : ""
-        } `}
+        className={`outline-none bg-zinc-200 px-2 py-1 border-2 rounded-lg placeholder:text-zinc-500 placeholder:font-medium transition-all ${
+          hasError ? "border-red-500" : "border-zinc-300 focus:border-cyan-400"
+        } `}        
         placeholder={placeholder}
       />
     </div>
